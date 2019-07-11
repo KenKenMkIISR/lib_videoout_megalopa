@@ -261,7 +261,7 @@ asm volatile("label4_2:");
 *********************/
 void __attribute__ ((aligned (16))) __ISR(10, ipl5) OC2Handler(void)
 {
-	nop();nop();nop();
+	nop();
 
 	asm volatile("#":::"v0");
 	asm volatile("#":::"v1");
@@ -503,14 +503,14 @@ asm volatile("label2_2:");
 	asm volatile("beqz	$t1,label3");
 	asm volatile("nop");
 
-nop();nop();nop();
+nop();nop();
 	// ウェイト
-	asm volatile("addiu	$a1,$zero,117");
+	asm volatile("addiu	$a1,$zero,115");
 asm volatile("waitloop1:");
 	asm volatile("addiu	$a1,$a1,-1");
 	asm volatile("nop");
 	asm volatile("bnez	$a1,waitloop1");
-
+nop();
 	// goto *vmodejtable[videomode];
 	asm volatile("la	$t0,%0"::"i"(&videomode));
 	asm volatile("la	$t1,%0"::"i"(vmodejtable));
@@ -523,11 +523,13 @@ asm volatile("waitloop1:");
 
 	nop();nop();nop();nop();//プリフェッチの影響排除用
 	nop();nop();nop();nop();
-	nop();nop();nop();// 16 align 調整用
+	nop();nop();nop();nop();// 16 align 調整用
+	nop();
 //----------------------------------------------------------------------
 //　288x216標準グラフィック+テキストモード
 //----------------------------------------------------------------------
 l_stdgmode:
+nop();
 	//	a1=ClTable;
 	asm volatile("la	$a1,%0"::"i"(ClTable));
 	//	a2=&LATE;
@@ -1355,7 +1357,7 @@ asm volatile("stdgmodeloop:");
 // 36x27標準テキストモード
 //----------------------------------------------------------------------
 l_stdtextmode:
-	nop();
+	nop();nop();nop();
 	//	a1=ClTable;
 	asm volatile("la	$a1,%0"::"i"(ClTable));
 
@@ -2177,6 +2179,7 @@ asm volatile("nop");
 // 384x216ワイドテキスト＆グラフィックモード
 //----------------------------------------------------------------------
 l_widegmode:
+nop();
 	asm volatile("addiu	$sp,$sp,-4");
 	asm volatile("sw	$t6,0($sp)");
 	asm volatile("addiu	$t6,$zero,9"); //loop counter
@@ -3005,7 +3008,7 @@ asm volatile("nop");
 // 48x27ワイドテキストモード
 //----------------------------------------------------------------------
 l_widetextmode:
-nop();nop();
+nop();nop();nop();nop();
 	//	a1=ClTable;
 	asm volatile("la	$a1,%0"::"i"(ClTable));
 
@@ -3836,7 +3839,7 @@ asm volatile("widetextmodeloop:");
 // 64x27ワイドテキストモード(6ドットフォント)
 //----------------------------------------------------------------------
 l_wide6dottextmode:
-nop();nop();
+nop();nop();nop();nop();
 	//	a1=ClTable;
 	asm volatile("la	$a1,%0"::"i"(ClTable));
 
@@ -4910,7 +4913,7 @@ asm volatile("wide6dottextmodeloop:");
 // type Z互換グラフィックモード（256x224, 4bit color）
 //----------------------------------------------------------------------
 l_zoeagmode:
-nop();nop();nop();nop();
+nop();nop();nop();nop();nop();nop();nop();
 	asm volatile("addiu	$a1,$zero,82");
 asm volatile("zoeagmodewaitloop1:");
 	asm volatile("addiu	$a1,$a1,-1");
@@ -5530,14 +5533,14 @@ asm volatile("nop");
 //----------------------------------------------------------------------
 l_width30textmode:
 // 320クロックウェイト
-	nop();nop();nop();
+nop();nop();nop();nop();
 	asm volatile("addiu	$a1,$zero,105");
 asm volatile("width30waitloop1:");
 	asm volatile("addiu	$a1,$a1,-1");
 	asm volatile("nop");
 	asm volatile("bnez	$a1,width30waitloop1");
 
-	nop();nop();
+	nop();nop();nop();
 
 	//	a1=ClTable;
 	asm volatile("la	$a1,%0"::"i"(ClTable));
@@ -6231,14 +6234,14 @@ asm volatile("nop");
 //----------------------------------------------------------------------
 l_width40textmode:
 // 320クロックウェイト
-	nop();nop();nop();
+	nop();nop();nop();nop();
 	asm volatile("addiu	$a1,$zero,105");
 asm volatile("width40waitloop1:");
 	asm volatile("addiu	$a1,$a1,-1");
 	asm volatile("nop");
 	asm volatile("bnez	$a1,width40waitloop1");
 
-	nop();nop();
+	nop();nop();nop();
 
 	//	a1=ClTable;
 	asm volatile("la	$a1,%0"::"i"(ClTable));
